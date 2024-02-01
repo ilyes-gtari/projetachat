@@ -12,7 +12,7 @@ spec:
       labels:
         app: achat-app
     spec:
-      containers:git add
+      containers:
         - name: achat-app
           image: 23153122e351/achatimage
           ports:
