@@ -16,4 +16,13 @@ spec:
         - name: achat-app
           image: 23153122e351/achatimage
           ports:
-            - containerPort: 8082
+            - containerPort: 8080
+              env:
+                - name: DB_HOST
+                  value: mysqldb
+                - name: DB_NAME
+                  value: crud-db
+                - name: DB_USERNAME
+                  value: root
+                - name: DB_PASSWORD
+                  value: Password123

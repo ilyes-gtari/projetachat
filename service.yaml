@@ -7,6 +7,6 @@ spec:
     app: achat-app
   ports:
     - protocol: TCP
-      port: 82
-      targetPort: 8082
+      port: 80
+      targetPort: 8080
   type: LoadBalancer
