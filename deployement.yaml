@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: achat-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: achat-app
+  template:
+    metadata:
+      labelgit s:
+        app: achat-app
+    spec:
+      containers:
+        - name: achat-app
+          image: 23153122e351/achatimage
+          ports:
+            - containerPort: 8080
