@@ -9,10 +9,10 @@ spec:
       app: achat-app
   template:
     metadata:
-      labelgit s:
+      labels:
         app: achat-app
     spec:
-      containers:
+      containers:git add
         - name: achat-app
           image: 23153122e351/achatimage
           ports:
