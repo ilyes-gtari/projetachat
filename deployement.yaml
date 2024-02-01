@@ -16,4 +16,4 @@ spec:
         - name: achat-app
           image: 23153122e351/achatimage
           ports:
-            - containerPort: 8080
+            - containerPort: 8082
