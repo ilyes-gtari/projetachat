@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: achat-app
+  namespace: default
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/ilyes-gtari/projetachat.git
+    targetRevision: HEAD
+    path: /
+  destination:
+    server: https://192.168.192.134:32453
+    namespace: default
