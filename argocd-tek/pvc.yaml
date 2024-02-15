@@ -8,6 +8,6 @@ spec:
   accessModes:
     - ReadWriteOnce
   nfs:
-    server: 192.168.244.190
+    server: 192.168.192.134
     path: /k8s
 
