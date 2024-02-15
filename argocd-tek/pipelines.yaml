@@ -1,0 +1,84 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: complete-pipelines
+spec:
+  description: "This pipeline clones a git repo, makes mvnw executable, runs JUnit tests, builds with Maven, then builds and pushes a Docker image."
+  params:
+    - name: repo-url
+      type: string
+      description: "The git repo URL to clone from."
+    - name: branch
+      type: string
+      description: "The git branch to clone."
+    - name: image
+      type: string
+      description: "The Docker image reference."
+    - name: context
+      type: string
+      description: "The Docker build context path."
+  workspaces:
+    - name: k8s
+  tasks:
+    - name: fetch-sources
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: k8s
+      params:
+        - name: url
+          value: "$(params.repo-url)"
+        - name: branch
+          value: "$(params.branch)"     
+
+    - name: maven-tasks
+      taskRef:
+        name: maven-tasks
+      runAfter:
+        - fetch-sources
+      workspaces:
+        - name: k8s
+      params:
+        - name: maven-command
+          value: "clean install -DskipTests"
+
+    - name: docker-builds
+      taskRef:
+        name: docker-builds
+      runAfter:
+        - maven-tasks
+      workspaces:
+        - name: k8s
+      params:
+        - name: image
+          value: "$(params.image)"
+        - name: context
+          value: "$(params.context)"
+
+    - name: docker-pushs  # Ajout de la tâche pour pousser l'image Docker
+      taskRef:
+        name: docker-pushs
+      runAfter:
+        - docker-builds
+      workspaces:
+        - name: k8s
+      params:
+        - name: image
+          value: "$(params.image)"
+          
+    - name: prepare-deploymentss
+      taskRef:
+        name: prepare-deploymentss
+      runAfter:
+        - docker-pushs
+      workspaces:
+        - name: k8s
+    
+    - name: junit-task
+      taskRef:
+        name: junit-task
+      runAfter:
+        - prepare-deploymentss
+      workspaces:
+        - name: k8s

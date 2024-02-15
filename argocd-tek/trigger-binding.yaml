@@ -1,0 +1,11 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: autre-bs
+spec:
+  params:
+    - name: git-repository
+      value: $(body.repository.url)
+    - name: git-revision
+      value: $(body.ref)
+

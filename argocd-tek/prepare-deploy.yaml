@@ -1,0 +1,21 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: prepare-deploymentss
+spec:
+  description: "Task to prepare deployment by installing kubectl and executing deploy.sh."
+  workspaces:
+    - name: k8s
+  steps:
+    - name: install-kubectl
+      image: alpine:latest
+      workingDir: /workspace/k8s
+      script: |
+        apk add --no-cache kubectl
+        kubectl version --client
+        echo "Installed kubectl at: $(which kubectl)"
+        ls -la
+        chmod +x deploy.sh
+        sh deploy.sh
+        chmod +x sync.sh
+        sh sync.sh

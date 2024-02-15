@@ -1,0 +1,26 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: maven-tasks
+spec:
+  workspaces:
+  - name: k8s
+  steps:
+  - name: show-directory-content
+    image: ubuntu
+    script: |
+      ls -la /workspace/k8s
+
+  - name: show-mvnw-content
+    image: ubuntu
+    script: |
+      cat /workspace/k8s/mvnw
+
+  - name: maven-builds
+    image: maven:3.6.3-openjdk-11
+    workingDir: /workspace/k8s
+    script: |
+      chmod +x mvnw
+      ls -la
+      sleep 7
+      mvn clean install -DskipTests

@@ -1,0 +1,16 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: argocd-listeners
+  namespace: default
+spec:
+  serviceAccountName: mon-nouveau-sa
+  triggers:
+    - name: autre-trigger
+      bindings:
+        - ref: autre-bs
+      template:
+        ref: my-trigger-template-fin-argocd
+  resources:
+    kubernetesResource:
+      serviceType: NodePort
