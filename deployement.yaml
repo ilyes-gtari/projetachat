@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
         - name: achat-app
-          image: 23153122e351/test
+          image: 23153122e351/test:v1  # Add ":v1" to specify the image tag
           ports:
-            - containerPort: 8080
+            - containerPort: 8082
           env:
             - name: DB_HOST
               value: mysqldb
