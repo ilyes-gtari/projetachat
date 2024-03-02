@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: springboot-k8s-mysql
-          image: 23153122e351/springboot-k8s-mysql:1.0
+          image: 23153122e351/test:v1
           ports:
             - containerPort: 8082
           env:   # Setting Enviornmental Variables
